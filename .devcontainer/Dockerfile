@@ -16,7 +16,11 @@ WORKDIR /workspace
 # Copia o projeto para dentro do container
 COPY . /workspace
 
+# Configura pnpm para modo não-interativo
+RUN echo "auto-install-peers=true" > .npmrc && \
+    echo "strict-peer-dependencies=false" >> .npmrc
+
 # Instala as dependências do projeto (com flags para evitar prompts interativos)
-RUN pnpm install --yes && \
+RUN pnpm install --force && \
     gem install bundler && \
     bundle install
