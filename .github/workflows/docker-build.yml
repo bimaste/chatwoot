@@ -16,7 +16,7 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build da imagem
-  	run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/chatwoot:latest -f .devcontainer/Dockerfile .
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/chatwoot:latest -f .devcontainer/Dockerfile .
 
       - name: Push da imagem para Docker Hub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/chatwoot:latest
