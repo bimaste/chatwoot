@@ -28,6 +28,11 @@ jobs:
           file: .devcontainer/Dockerfile
           push: true
           tags: bimaste/chatwoot:latest
+          build-args: |
+            IMAGE_NAME=bimaste/chatwoot
+          labels: |
+            org.opencontainers.image.source=https://github.com/bimaste/chatwoot
+            org.opencontainers.image.description=Chatwoot Docker image
 
 
 

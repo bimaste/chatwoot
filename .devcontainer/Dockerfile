@@ -1,3 +1,6 @@
+# Define o nome da imagem como argumento
+ARG IMAGE_NAME=bimaste/chatwoot
+
 # Imagem base oficial do Chatwoot para Codespaces
 FROM ghcr.io/chatwoot/chatwoot_codespace:latest
 
