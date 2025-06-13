@@ -4,8 +4,8 @@ FROM ghcr.io/chatwoot/chatwoot_codespace:latest
 # Usa o usuário root para instalar dependências globais
 USER root
 
-# Habilita o corepack e ativa o Yarn
-RUN corepack enable && corepack prepare yarn@stable --activate
+# Instala e configura o pnpm
+RUN npm install -g pnpm
 
 # Define o diretório de trabalho
 WORKDIR /workspace
@@ -14,4 +14,4 @@ WORKDIR /workspace
 COPY . /workspace
 
 # Instala as dependências do projeto
-RUN yarn && gem install bundler && bundle install
+RUN pnpm install && gem install bundler && bundle install
