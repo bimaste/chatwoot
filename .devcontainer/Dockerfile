@@ -7,11 +7,16 @@ USER root
 # Instala e configura o pnpm
 RUN npm install -g pnpm
 
+# Instala a versão do Ruby necessária
+RUN rbenv install 3.3.3 -s && rbenv global 3.3.3
+
 # Define o diretório de trabalho
 WORKDIR /workspace
 
 # Copia o projeto para dentro do container
 COPY . /workspace
 
-# Instala as dependências do projeto
-RUN pnpm install && gem install bundler && bundle install
+# Instala as dependências do projeto (com flags para evitar prompts interativos)
+RUN pnpm install --yes && \
+    gem install bundler && \
+    bundle install
