@@ -21,14 +21,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Construir apenas a imagem base primeiro
-      - name: Construir imagem
-        run: |
-          # Construir a imagem usando seu nome de usuário do Docker Hub
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/chatwoot:latest -f docker/Dockerfile .
-          
-          # Enviar para o Docker Hub
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/chatwoot:latest
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/chatwoot:latest
+          platforms: linux/amd64,linux/arm64
 
 
 
