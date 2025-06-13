@@ -7,10 +7,12 @@ USER root
 # Instala e configura o pnpm
 RUN npm install -g pnpm
 
-# Instala a versão do Ruby necessária e configura o rbenv
-RUN rbenv install 3.3.3 -s && \
-    rbenv global 3.3.3 && \
-    echo 'eval "$(rbenv init -)"' >> /root/.bashrc
+# Prepara o ambiente para rbenv
+ENV PATH="/root/.rbenv/bin:/root/.rbenv/shims:$PATH"
+RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
+
+# Instala a versão do Ruby necessária
+RUN rbenv install 3.3.3 -s && rbenv global 3.3.3
 
 # Define o diretório de trabalho
 WORKDIR /workspace
@@ -25,9 +27,17 @@ COPY . /workspace
 RUN echo "auto-install-peers=true" > .npmrc && \
     echo "strict-peer-dependencies=false" >> .npmrc
 
-# Carrega o rbenv e instala as dependências
+# Lista as versões de Ruby disponíveis (para debug)
+RUN rbenv versions
+
+# Instala as dependências (em duas etapas para isolar problemas)
+RUN pnpm install --force
+
+# Instala as dependências Ruby
 SHELL ["/bin/bash", "-c"]
-RUN source /root/.bashrc && \
-    pnpm install --force && \
+RUN eval "$(rbenv init -)" && \
+    rbenv rehash && \
+    rbenv global 3.3.3 && \
+    rbenv versions && \
     gem install bundler && \
     bundle install
