@@ -24,10 +24,7 @@ jobs:
       # Construir apenas a imagem base primeiro
       - name: Construir imagem
         run: |
-          # Modificar o docker-compose.production.yaml para usar seu nome de imagem
-          sed -i 's/image: chatwoot\/chatwoot:latest/image: ${{ secrets.DOCKERHUB_USERNAME }}\/chatwoot:latest/g' docker-compose.production.yaml
-          
-          # Construir a imagem usando o comando que acessa os scripts originais, mas com o nome diferente
+          # Construir a imagem usando seu nome de usuário do Docker Hub
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/chatwoot:latest -f docker/Dockerfile .
           
           # Enviar para o Docker Hub
