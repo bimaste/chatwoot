@@ -548,7 +548,7 @@ export default {
           :inbox-id="data.inbox_id"
           :created-at="createdAt"
         />
-        <span v-if="isMessageDeleted" class="deleted-message text-xs">
+        <span v-if="isMessageDeleted" class="text-xs text-n-slate-11">
           {{ $t('CONVERSATION.DELETED_MESSAGE') }}
         </span>
       </div>
