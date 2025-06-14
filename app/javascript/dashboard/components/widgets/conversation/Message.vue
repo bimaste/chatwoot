@@ -548,6 +548,9 @@ export default {
           :inbox-id="data.inbox_id"
           :created-at="createdAt"
         />
+        <span v-if="isMessageDeleted" class="deleted-message text-xs">
+          {{ $t('CONVERSATION.DELETED_MESSAGE') }}
+        </span>
       </div>
       <Spinner v-if="isPending" size="tiny" />
       <div
