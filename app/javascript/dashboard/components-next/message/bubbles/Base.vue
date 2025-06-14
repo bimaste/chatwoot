@@ -10,8 +10,15 @@ import { useI18n } from 'vue-i18n';
 import { BUS_EVENTS } from 'shared/constants/busEvents';
 import { MESSAGE_VARIANTS, ORIENTATION } from '../constants';
 
-const { variant, orientation, inReplyTo, shouldGroupWithNext } =
-  useMessageContext();
+const {
+  variant,
+  orientation,
+  inReplyTo,
+  shouldGroupWithNext,
+  contentAttributes,
+} = useMessageContext();
+
+const isDeleted = computed(() => contentAttributes.value?.deleted);
 const { t } = useI18n();
 
 const varaintBaseMap = {
@@ -101,6 +108,9 @@ const replyToPreview = computed(() => {
       </span>
     </div>
     <slot />
+    <span v-if="isDeleted" class="text-xs text-n-slate-11">
+      {{ t('CONVERSATION.DELETED_MESSAGE') }}
+    </span>
     <MessageMeta
       v-if="!shouldGroupWithNext && variant !== MESSAGE_VARIANTS.ACTIVITY"
       :class="[
