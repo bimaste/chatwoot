@@ -1,12 +1,4 @@
 titleOnly: true
-types:
-  - Feature
-  - Fix
-  - Docs
-  - Style
-  - Refactor
-  - Perf
-  - Test
-  - Build
-  - Chore
-  - Revert
+headerPattern: "^.*$"
+headerPatternCorrespondence:
+  - subject

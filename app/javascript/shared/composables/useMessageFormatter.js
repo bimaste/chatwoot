@@ -66,6 +66,10 @@ export const useMessageFormatter = () => {
   ) => {
     const plainTextContent = getPlainText(content);
 
+    if (!searchTerm) {
+      return plainTextContent;
+    }
+
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
     const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 

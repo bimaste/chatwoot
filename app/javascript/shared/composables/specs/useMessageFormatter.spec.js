@@ -87,5 +87,11 @@ describe('useMessageFormatter', () => {
         'This <span class="highlight">(message)</span> contains [special] characters'
       );
     });
+
+    it('should return plain text when search term is empty', () => {
+      const content = 'This is a test message';
+      const result = messageFormatter.highlightContent(content, '', 'highlight');
+      expect(result.trim()).toBe('This is a test message');
+    });
   });
 });

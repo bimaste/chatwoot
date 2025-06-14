@@ -1,5 +1,6 @@
 <script>
 import { mapGetters } from 'vuex';
+import { inject } from 'vue';
 import {
   getSortedAgentsByAvailability,
   getAgentsByUpdatedPresence,
@@ -8,6 +9,7 @@ import MenuItem from './menuItem.vue';
 import MenuItemWithSubmenu from './menuItemWithSubmenu.vue';
 import wootConstants from 'dashboard/constants/globals';
 import AgentLoadingPlaceholder from './agentLoadingPlaceholder.vue';
+import { useAdmin } from 'dashboard/composables/useAdmin';
 
 export default {
   components: {
@@ -45,7 +47,16 @@ export default {
     'assignAgent',
     'assignTeam',
     'assignLabel',
+    'deleteConversation',
   ],
+  setup() {
+    const { isAdmin } = useAdmin();
+    const openResolutionNoteModal = inject('openResolutionNoteModal');
+    return {
+      isAdmin,
+      openResolutionNoteModal,
+    };
+  },
   data() {
     return {
       STATUS_TYPE: wootConstants.STATUS_TYPE,
@@ -121,6 +132,11 @@ export default {
         icon: 'people-team-add',
         label: this.$t('CONVERSATION.CARD_CONTEXT_MENU.ASSIGN_TEAM'),
       },
+      deleteOption: {
+        key: 'delete',
+        icon: 'delete',
+        label: this.$t('CONVERSATION.CARD_CONTEXT_MENU.DELETE'),
+      },
     };
   },
   computed: {
@@ -167,8 +183,15 @@ export default {
     this.$store.dispatch('inboxAssignableAgents/fetch', [this.inboxId]);
   },
   methods: {
-    toggleStatus(status, snoozedUntil) {
-      this.$emit('updateConversation', status, snoozedUntil);
+    async toggleStatus(status, snoozedUntil) {
+      let note;
+      if (
+        status === wootConstants.STATUS_TYPE.RESOLVED &&
+        typeof this.openResolutionNoteModal === 'function'
+      ) {
+        note = await this.openResolutionNoteModal();
+      }
+      this.$emit('updateConversation', status, snoozedUntil, note);
     },
     async snoozeConversation() {
       await this.$store.dispatch('setContextMenuChatId', this.chatId);
@@ -177,6 +200,9 @@ export default {
     },
     assignPriority(priority) {
       this.$emit('assignPriority', priority);
+    },
+    deleteConversation() {
+      this.$emit('deleteConversation', this.chatId);
     },
     show(key) {
       // If the conversation status is same as the action, then don't display the option
@@ -277,5 +303,13 @@ export default {
         @click.stop="$emit('assignTeam', team)"
       />
     </MenuItemWithSubmenu>
+    <template v-if="isAdmin">
+      <hr class="m-1 rounded border-b border-n-weak dark:border-n-weak" />
+      <MenuItem
+        :option="deleteOption"
+        variant="icon"
+        @click.stop="deleteConversation"
+      />
+    </template>
   </div>
 </template>
