@@ -18,6 +18,13 @@ const primaryMenuItems = accountId => [
     toStateName: 'home',
   },
   {
+    icon: 'link-outline',
+    key: 'crm',
+    label: 'CRM',
+    openInNewPage: true,
+    toState: 'https://crm.cruzeirodosulrj.com/',
+  },
+  {
     icon: 'captain',
     key: 'captain',
     label: 'CAPTAIN',

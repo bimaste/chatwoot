@@ -88,6 +88,7 @@ export default {
         :name="menuItem.label"
         :to="menuItem.toState"
         :is-child-menu-active="menuItem.key === activeMenuItem"
+        :open-in-new-page="menuItem.openInNewPage"
       />
     </div>
     <div class="flex flex-col items-center justify-end pb-6">
