@@ -89,7 +89,8 @@ RUN apk update && apk add --no-cache \
   postgresql-client \
   imagemagick \
   vips \
-  libstdc++
+  libstdc++ \
+  gcompat # Adicionar gcompat para compatibilidade com glibc
 
 COPY --from=node /usr/local/bin/node /usr/local/bin/
 
