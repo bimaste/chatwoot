@@ -16,6 +16,7 @@ import {
 } from 'dashboard/helper/commandbar/events';
 
 import Button from 'dashboard/components-next/button/Button.vue';
+import ResolutionNoteModal from '../modals/ResolutionNoteModal.vue';
 
 const store = useStore();
 const getters = useStoreGetters();
@@ -23,6 +24,8 @@ const { t } = useI18n();
 
 const arrowDownButtonRef = ref(null);
 const isLoading = ref(false);
+const showResolutionNoteModal = ref(false);
+let noteText = '';
 
 const [showActionsDropdown, toggleDropdown] = useToggle();
 const closeDropdown = () => toggleDropdown(false);
@@ -91,12 +94,27 @@ const toggleStatus = (status, snoozedUntil) => {
     });
 };
 
+const onSaveResolutionNote = async note => {
+  noteText = note;
+  if (!noteText) return;
+  await store.dispatch('contactNotes/create', {
+    contactId: currentChat.value.meta.sender.id,
+    content: noteText,
+  });
+  toggleStatus(wootConstants.STATUS_TYPE.RESOLVED);
+};
+
+const onCloseResolutionNote = () => {
+  noteText = '';
+  showResolutionNoteModal.value = false;
+};
+
 const onCmdOpenConversation = () => {
   toggleStatus(wootConstants.STATUS_TYPE.OPEN);
 };
 
 const onCmdResolveConversation = () => {
-  toggleStatus(wootConstants.STATUS_TYPE.RESOLVED);
+  showResolutionNoteModal.value = true;
 };
 
 const keyboardEvents = {
@@ -105,21 +123,13 @@ const keyboardEvents = {
     allowOnFocusedInput: true,
   },
   'Alt+KeyE': {
-    action: async () => {
-      await toggleStatus(wootConstants.STATUS_TYPE.RESOLVED);
+    action: () => {
+      onCmdResolveConversation();
     },
   },
   '$mod+Alt+KeyE': {
-    action: async event => {
-      const { all, activeIndex, lastIndex } = getConversationParams();
-      await toggleStatus(wootConstants.STATUS_TYPE.RESOLVED);
-
-      if (activeIndex < lastIndex) {
-        all[activeIndex + 1].click();
-      } else if (all.length > 1) {
-        all[0].click();
-        document.querySelector('.conversations-list').scrollTop = 0;
-      }
+    action: event => {
+      onCmdResolveConversation();
       event.preventDefault();
     },
   },
@@ -208,6 +218,11 @@ useEmitter(CMD_RESOLVE_CONVERSATION, onCmdResolveConversation);
       </WootDropdownMenu>
     </div>
   </div>
+  <ResolutionNoteModal
+    v-model:show="showResolutionNoteModal"
+    @save="onSaveResolutionNote"
+    @close="onCloseResolutionNote"
+  />
 </template>
 
 <style lang="scss" scoped>

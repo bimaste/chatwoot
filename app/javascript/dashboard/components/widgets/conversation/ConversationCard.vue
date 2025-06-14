@@ -205,13 +205,14 @@ export default {
       this.contextMenu.x = null;
       this.contextMenu.y = null;
     },
-    onUpdateConversation(status, snoozedUntil) {
+    onUpdateConversation(status, snoozedUntil, note) {
       this.closeContextMenu();
       this.$emit(
         'updateConversationStatus',
         this.chat.id,
         status,
-        snoozedUntil
+        snoozedUntil,
+        note
       );
     },
     async onAssignAgent(agent) {

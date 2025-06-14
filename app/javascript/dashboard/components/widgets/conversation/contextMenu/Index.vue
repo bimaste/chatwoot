@@ -1,5 +1,6 @@
 <script>
 import { mapGetters } from 'vuex';
+import { inject } from 'vue';
 import {
   getSortedAgentsByAvailability,
   getAgentsByUpdatedPresence,
@@ -50,8 +51,10 @@ export default {
   ],
   setup() {
     const { isAdmin } = useAdmin();
+    const openResolutionNoteModal = inject('openResolutionNoteModal');
     return {
       isAdmin,
+      openResolutionNoteModal,
     };
   },
   data() {
@@ -180,8 +183,15 @@ export default {
     this.$store.dispatch('inboxAssignableAgents/fetch', [this.inboxId]);
   },
   methods: {
-    toggleStatus(status, snoozedUntil) {
-      this.$emit('updateConversation', status, snoozedUntil);
+    async toggleStatus(status, snoozedUntil) {
+      let note;
+      if (
+        status === wootConstants.STATUS_TYPE.RESOLVED &&
+        typeof this.openResolutionNoteModal === 'function'
+      ) {
+        note = await this.openResolutionNoteModal();
+      }
+      this.$emit('updateConversation', status, snoozedUntil, note);
     },
     async snoozeConversation() {
       await this.$store.dispatch('setContextMenuChatId', this.chatId);

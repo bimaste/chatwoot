@@ -123,6 +123,12 @@
       "DESCRIPTION": "Are you sure you want to delete this conversation?",
       "CONFIRM": "Delete"
     },
+    "RESOLUTION_NOTE": {
+      "TITLE": "Add resolution note",
+      "PLACEHOLDER": "Type the reason for resolving",
+      "SAVE": "Save",
+      "CANCEL": "Cancel"
+    },
     "CARD_CONTEXT_MENU": {
       "PENDING": "Mark as pending",
       "RESOLVED": "Mark as resolved",
