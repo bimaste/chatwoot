@@ -464,7 +464,11 @@ export default {
           @click="retrySendMessage"
         />
       </div>
-      <div :class="bubbleClass" @contextmenu="openContextMenu($event)">
+      <div
+        :class="bubbleClass"
+        :data-agent-name="isAgentMessage ? senderNameForAvatar : ''"
+        @contextmenu="openContextMenu($event)"
+      >
         <BubbleMailHead
           :email-attributes="contentAttributes.email"
           :cc="emailHeadAttributes.cc"
@@ -729,6 +733,24 @@ li.right {
   .wrap.is-failed {
     @apply flex items-end ltr:ml-auto rtl:mr-auto;
   }
+}
+
+// Adicionar o nome do agente após mensagens de saída (outgoing)
+.right .bubble::after {
+  content: "- " attr(data-agent-name);
+  display: block;
+  text-align: right;
+  font-size: 11px;
+  color: var(--woot-color-woot-200);
+  font-style: italic;
+  opacity: 0.8;
+  margin-top: 8px;
+  padding: 0 12px 4px;
+}
+
+// Para mensagens privadas
+.right .bubble.is-private::after {
+  color: var(--woot-color-woot-600);
 }
 
 .has-context-menu {
