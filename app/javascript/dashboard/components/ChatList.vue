@@ -31,6 +31,7 @@ import DeleteCustomViews from 'dashboard/routes/dashboard/customviews/DeleteCust
 import ConversationBulkActions from './widgets/conversation/conversationBulkActions/Index.vue';
 import IntersectionObserver from './IntersectionObserver.vue';
 import TeleportWithDirection from 'dashboard/components-next/TeleportWithDirection.vue';
+import ResolutionNoteModal from './modals/ResolutionNoteModal.vue';
 
 import { useUISettings } from 'dashboard/composables/useUISettings';
 import { useAlert } from 'dashboard/composables';
@@ -102,6 +103,8 @@ const foldersQuery = ref({});
 const showAddFoldersModal = ref(false);
 const showDeleteFoldersModal = ref(false);
 const isContextMenuOpen = ref(false);
+const showResolutionNoteModal = ref(false);
+let resolveNoteModalResolver = null;
 const appliedFilter = ref([]);
 const advancedFilterTypes = ref(
   advancedFilterOptions.map(filter => ({
@@ -732,16 +735,53 @@ async function onAssignTeam(team, conversationId = null) {
   }
 }
 
-function toggleConversationStatus(conversationId, status, snoozedUntil) {
-  store
-    .dispatch('toggleStatus', {
-      conversationId,
-      status,
-      snoozedUntil,
-    })
-    .then(() => {
-      useAlert(t('CONVERSATION.CHANGE_STATUS'));
+function openResolutionNoteModal() {
+  showResolutionNoteModal.value = true;
+  return new Promise(resolve => {
+    resolveNoteModalResolver = resolve;
+  });
+}
+
+function handleResolutionModalSave(note) {
+  showResolutionNoteModal.value = false;
+  if (resolveNoteModalResolver) {
+    resolveNoteModalResolver(note);
+    resolveNoteModalResolver = null;
+  }
+}
+
+function handleResolutionModalClose() {
+  showResolutionNoteModal.value = false;
+  if (resolveNoteModalResolver) {
+    resolveNoteModalResolver(null);
+    resolveNoteModalResolver = null;
+  }
+}
+
+async function toggleConversationStatus(
+  conversationId,
+  status,
+  snoozedUntil,
+  note = null
+) {
+  let finalNote = note;
+  if (status === wootConstants.STATUS_TYPE.RESOLVED && !finalNote) {
+    finalNote = await openResolutionNoteModal();
+    if (!finalNote) return;
+  }
+  if (status === wootConstants.STATUS_TYPE.RESOLVED) {
+    const conversation = store.getters.getConversationById(conversationId);
+    await store.dispatch('contactNotes/create', {
+      contactId: conversation.meta.sender.id,
+      content: finalNote,
     });
+  }
+  await store.dispatch('toggleStatus', {
+    conversationId,
+    status,
+    snoozedUntil,
+  });
+  useAlert(t('CONVERSATION.CHANGE_STATUS'));
 }
 
 function allSelectedConversationsStatus(status) {
@@ -802,6 +842,7 @@ provide('assignAgent', onAssignAgent);
 provide('assignTeam', onAssignTeam);
 provide('assignLabels', onAssignLabels);
 provide('updateConversationStatus', toggleConversationStatus);
+provide('openResolutionNoteModal', openResolutionNoteModal);
 provide('toggleContextMenu', onContextMenuToggle);
 provide('markAsUnread', markAsUnread);
 provide('markAsRead', markAsRead);
@@ -999,5 +1040,10 @@ watch(conversationFilters, (newVal, oldVal) => {
         @close="closeAdvanceFiltersModal"
       />
     </TeleportWithDirection>
+    <ResolutionNoteModal
+      v-model:show="showResolutionNoteModal"
+      @save="handleResolutionModalSave"
+      @close="handleResolutionModalClose"
+    />
   </div>
 </template>
