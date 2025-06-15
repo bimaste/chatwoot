@@ -22,7 +22,7 @@ const primaryMenuItems = accountId => [
     key: 'crm_test',
     label: 'CRM',
     // toState: frontendURL(`accounts/${accountId}/dashboard`),
-    toStateName: 'home',
+    // toStateName: 'home',
     openInNewPage: true,
     toState: 'https://crm.cruzeirodosulrj.com/',
   },
