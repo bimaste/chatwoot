@@ -18,13 +18,13 @@ const primaryMenuItems = accountId => [
     toStateName: 'home',
   },
   {
-    icon: 'link-outline',
+    icon: 'captain',
     key: 'crm_test',
-    label: 'CRM_TEST_LABEL',
-    toState: frontendURL(`accounts/${accountId}/dashboard`),
+    label: 'CRM',
+    // toState: frontendURL(`accounts/${accountId}/dashboard`),
     toStateName: 'home',
-    // openInNewPage: true,
-    // toState: 'https://crm.cruzeirodosulrj.com/',
+    openInNewPage: true,
+    toState: 'https://crm.cruzeirodosulrj.com/',
   },
   {
     icon: 'captain',
