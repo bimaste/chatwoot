@@ -19,12 +19,11 @@ const primaryMenuItems = accountId => [
   },
   {
     icon: 'captain',
-    key: 'crm_test',
+    key: 'crm_external_link',
     label: 'CRM',
-    // toState: frontendURL(`accounts/${accountId}/dashboard`),
-    // toStateName: 'home',
-    openInNewPage: true,
     toState: 'https://crm.cruzeirodosulrj.com/',
+    toStateName: 'home',
+    openInNewPage: true,
   },
   {
     icon: 'captain',
