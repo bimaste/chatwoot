@@ -21,11 +21,12 @@ const primaryMenuItems = accountId => [
     icon: 'captain',
     key: 'crm_external_link',
     label: 'CRM',
-    toState: 'https://crm.cruzeirodosulrj.com/',
-    toStateName: 'portals_index',
+    toState: () => { 
+      window.open('https://crm.cruzeirodosulrj.com/', '_blank'); 
+    },
     openInNewPage: true,
     alwaysVisibleOnChatwootInstances: true,
-    featureFlag: FEATURE_FLAGS.HELP_CENTER,
+    toStateName: 'home',
   },
   {
     icon: 'captain',
