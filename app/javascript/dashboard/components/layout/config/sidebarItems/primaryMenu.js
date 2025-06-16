@@ -17,16 +17,24 @@ const primaryMenuItems = accountId => [
     toState: frontendURL(`accounts/${accountId}/dashboard`),
     toStateName: 'home',
   },
-  {
-    icon: 'captain',
-    key: 'crm_external_link',
+  // {
+  //   icon: 'captain',
+  //   key: 'crm_external_link',
+  //   label: 'CRM',
+  //   toState: 'https://crm.cruzeirodosulrj.com/',
+  //   toStateName: 'portals_index',
+  //   openInNewPage: true,
+  //   alwaysVisibleOnChatwootInstances: true,
+  //   featureFlag: FEATURE_FLAGS.HELP_CENTER,
+  // },
+    {
+    icon: 'library',
+    key: 'helpcenter',
     label: 'CRM',
-    toState: () => { 
-      window.open('https://crm.cruzeirodosulrj.com/', '_blank'); 
-    },
-    openInNewPage: true,
+    featureFlag: FEATURE_FLAGS.HELP_CENTER,
     alwaysVisibleOnChatwootInstances: true,
-    toStateName: 'home',
+    toState: frontendURL(`accounts/${accountId}/portals/portal_articles_index`),
+    toStateName: 'portals_index',
   },
   {
     icon: 'captain',
@@ -60,15 +68,15 @@ const primaryMenuItems = accountId => [
     toState: frontendURL(`accounts/${accountId}/campaigns`),
     toStateName: 'campaigns_ongoing_index',
   },
-  {
-    icon: 'library',
-    key: 'helpcenter',
-    label: 'HELP_CENTER.TITLE',
-    featureFlag: FEATURE_FLAGS.HELP_CENTER,
-    alwaysVisibleOnChatwootInstances: true,
-    toState: frontendURL(`accounts/${accountId}/portals/portal_articles_index`),
-    toStateName: 'portals_index',
-  },
+  // {
+  //   icon: 'library',
+  //   key: 'helpcenter',
+  //   label: 'HELP_CENTER.TITLE',
+  //   featureFlag: FEATURE_FLAGS.HELP_CENTER,
+  //   alwaysVisibleOnChatwootInstances: true,
+  //   toState: frontendURL(`accounts/${accountId}/portals/portal_articles_index`),
+  //   toStateName: 'portals_index',
+  // },
   {
     icon: 'settings',
     key: 'settings',
