@@ -18,18 +18,6 @@ const primaryMenuItems = accountId => [
     toStateName: 'home',
   },
   {
-    icon: 'captain',
-    key: 'captain',
-    label: 'CRM',
-    // featureFlag: FEATURE_FLAGS.CAPTAIN,
-    toState: 'https://crm.cruzeirodosulrj.com/',
-    toStateName: 'home',
-    alwaysVisibleOnChatwootInstances: true,
-    isExternalLink: true,
-    target: '_blank',
-    nativeLink: true,
-  },
-  {
     icon: 'book-contacts',
     key: 'contacts',
     label: 'CONTACTS',
