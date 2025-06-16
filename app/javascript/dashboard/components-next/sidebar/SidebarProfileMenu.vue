@@ -144,7 +144,23 @@ const allowedMenuItems = computed(() => {
       <SidebarProfileMenuStatus />
       <DropdownSeparator />
       <template v-for="item in allowedMenuItems" :key="item.label">
+        <!-- Tratamento especial para o item CRM -->
         <CustomBrandPolicyWrapper
+          v-if="
+            item.label === t('SIDEBAR_ITEMS.DOCS') &&
+            item.link === 'https://crm.cruzeirodosulrj.com/'
+          "
+          :show-on-custom-branded-instance="item.showOnCustomBrandedInstance"
+        >
+          <DropdownItem
+            v-if="item.show"
+            v-bind="item"
+            :native-link="item.nativeLink"
+            :target="item.target"
+          />
+        </CustomBrandPolicyWrapper>
+        <CustomBrandPolicyWrapper
+          v-else
           :show-on-custom-branded-instance="item.showOnCustomBrandedInstance"
         >
           <DropdownItem v-if="item.show" v-bind="item" />
