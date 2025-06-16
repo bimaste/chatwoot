@@ -144,26 +144,31 @@ const allowedMenuItems = computed(() => {
       <SidebarProfileMenuStatus />
       <DropdownSeparator />
       <template v-for="item in allowedMenuItems" :key="item.label">
-        <!-- Tratamento especial para o item CRM -->
+        <!-- Link direto para CRM -->
         <CustomBrandPolicyWrapper
-          v-if="
-            item.label === t('SIDEBAR_ITEMS.DOCS') &&
-            item.link === 'https://crm.cruzeirodosulrj.com/'
-          "
+          v-if="item.label === t('SIDEBAR_ITEMS.DOCS')"
           :show-on-custom-branded-instance="item.showOnCustomBrandedInstance"
         >
-          <DropdownItem
-            v-if="item.show"
-            v-bind="item"
-            :native-link="item.nativeLink"
-            :target="item.target"
-          />
+          <a
+            href="https://crm.cruzeirodosulrj.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="dropdown-item flex items-center gap-2 w-full px-2.5 py-1.5 text-sm no-underline text-inherit"
+            @click.stop="
+              window.open('https://crm.cruzeirodosulrj.com/', '_blank')
+            "
+          >
+            <i class="i-lucide-book text-base" />
+            {{ item.label }}
+          </a>
         </CustomBrandPolicyWrapper>
+
+        <!-- Outros itens do menu -->
         <CustomBrandPolicyWrapper
           v-else
           :show-on-custom-branded-instance="item.showOnCustomBrandedInstance"
         >
-          <DropdownItem v-if="item.show" v-bind="item" />
+          <DropdownItem v-bind="item" />
         </CustomBrandPolicyWrapper>
       </template>
     </DropdownBody>
