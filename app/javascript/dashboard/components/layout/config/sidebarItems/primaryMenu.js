@@ -23,10 +23,10 @@ const primaryMenuItems = accountId => [
     label: 'CRM',
     // featureFlag: FEATURE_FLAGS.CAPTAIN,
     toState: 'https://crm.cruzeirodosulrj.com/',
-    toStateName: null,
+    toStateName: '',
     alwaysVisibleOnChatwootInstances: true,
     isExternalLink: true,
-    target: '_blank', // Adicione para abrir em nova aba
+    target: '_blank',
     nativeLink: true,
   },
   {
