@@ -27,7 +27,7 @@ const primaryMenuItems = accountId => [
   //   alwaysVisibleOnChatwootInstances: true,
   //   featureFlag: FEATURE_FLAGS.HELP_CENTER,
   // },
-    {
+  {
     icon: 'library',
     key: 'helpcenter',
     label: 'CRM',
