@@ -32,8 +32,7 @@ export default {
     EXPANDED: 'expanded',
   },
   DOCS_URL: 'https://crm.cruzeirodosulrj.com/',
-  HELP_CENTER_DOCS_URL:
-    'https://www.chatwoot.com/docs/product/others/help-center',
+  HELP_CENTER_DOCS_URL: 'https://crm.cruzeirodosulrj.com/',
   TESTIMONIAL_URL: 'https://testimonials.cdn.chatwoot.com/content.json',
   SMALL_SCREEN_BREAKPOINT: 1200,
   AVAILABILITY_STATUS_KEYS: ['online', 'busy', 'offline'],
