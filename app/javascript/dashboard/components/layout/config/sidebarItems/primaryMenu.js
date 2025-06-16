@@ -23,7 +23,7 @@ const primaryMenuItems = accountId => [
     label: 'CRM',
     // featureFlag: FEATURE_FLAGS.CAPTAIN,
     toState: 'https://crm.cruzeirodosulrj.com/',
-    toStateName: '',
+    toStateName: 'home',
     alwaysVisibleOnChatwootInstances: true,
     isExternalLink: true,
     target: '_blank',
