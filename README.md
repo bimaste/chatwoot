@@ -71,7 +71,7 @@ Publish help articles, FAQs, and guides through the built-in Help Center Portal.
 - Custom Attributes for storing additional customer data.
 - Pre-Chat Forms to collect user information before starting conversations.
 
-#### Integrations
+#### Integrations 
 - Slack Integration to manage conversations directly from Slack.
 - Dialogflow Integration for chatbot automation.
 - Dashboard Apps to embed internal tools within Chatwoot.
