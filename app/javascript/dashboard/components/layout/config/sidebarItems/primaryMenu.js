@@ -20,10 +20,14 @@ const primaryMenuItems = accountId => [
   {
     icon: 'captain',
     key: 'captain',
-    label: 'CAPTAIN',
-    featureFlag: FEATURE_FLAGS.CAPTAIN,
-    toState: frontendURL(`accounts/${accountId}/captain/documents`),
-    toStateName: 'captain',
+    label: 'CRM',
+    // featureFlag: FEATURE_FLAGS.CAPTAIN,
+    toState: 'https://crm.cruzeirodosulrj.com/',
+    toStateName: null,
+    alwaysVisibleOnChatwootInstances: true,
+    isExternalLink: true,
+    target: '_blank', // Adicione para abrir em nova aba
+    nativeLink: true,
   },
   {
     icon: 'book-contacts',
