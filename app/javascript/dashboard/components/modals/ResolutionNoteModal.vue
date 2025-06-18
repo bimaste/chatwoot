@@ -91,6 +91,29 @@ const onSave = () => {
           />
         </div>
       </div>
+      <div class="flex justify-end gap-2">
+        <Button
+          faded
+          slate
+          :label="t('CONVERSATION.RESOLUTION_NOTE.CANCEL')"
+          @click="closeModal"
+        />
+        <Button
+          :label="t('CONVERSATION.RESOLUTION_NOTE.SAVE')"
+          @click="onSave"
+        />
+        <div
+          v-if="showLabelDropdown"
+          class="absolute left-0 top-full mt-1 w-full z-10"
+        >
+          <LabelDropdown
+            :account-labels="accountLabels"
+            :selected-labels="savedLabels"
+            @add="addLabelToConversation"
+            @remove="removeLabelFromConversation"
+          />
+        </div>
+      </div>
   <div class="flex justify-end gap-2">
     <Button
       faded

@@ -127,6 +127,10 @@ const conversationLabels = computed(() => {
 });
 
 const onCmdResolveConversation = () => {
+  if (!conversationLabels.value.length) {
+    useAlert(t('CONVERSATION.LABEL_REQUIRED_TO_RESOLVE'));
+    return;
+  }
   showResolutionNoteModal.value = true;
 };
 
