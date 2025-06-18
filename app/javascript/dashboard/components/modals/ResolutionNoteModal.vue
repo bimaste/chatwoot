@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useAlert } from 'dashboard/composables';
 import Editor from 'dashboard/components-next/Editor/Editor.vue';
@@ -27,6 +27,20 @@ const {
 } = useConversationLabels();
 
 const showLabelDropdown = ref(false);
+const initialLabels = ref([]);
+
+watch(
+  () => show.value,
+  newVal => {
+    if (newVal) {
+      initialLabels.value = [...savedLabels.value];
+    }
+  }
+);
+
+const hasNewLabel = computed(() =>
+  savedLabels.value.some(label => !initialLabels.value.includes(label))
+);
 
 const toggleLabels = () => {
   showLabelDropdown.value = !showLabelDropdown.value;
@@ -81,10 +95,7 @@ const onSave = () => {
           class="max-w-[calc(100%-0.5rem)]"
           @remove="removeLabelFromConversation"
         />
-        <div
-          v-if="showLabelDropdown"
-          class="absolute left-0 top-full mt-1 w-full z-10"
-        >
+        <div v-if="showLabelDropdown" class="w-full mt-1 z-10">
           <LabelDropdown
             :account-labels="accountLabels"
             :selected-labels="savedLabels"
@@ -101,7 +112,7 @@ const onSave = () => {
           @click="closeModal"
         />
         <Button
-          v-if="activeLabels.length"
+          v-if="hasNewLabel"
           :label="t('CONVERSATION.RESOLUTION_NOTE.SAVE')"
           @click="onSave"
         />
