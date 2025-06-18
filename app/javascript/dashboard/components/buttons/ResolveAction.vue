@@ -113,7 +113,19 @@ const onCmdOpenConversation = () => {
   toggleStatus(wootConstants.STATUS_TYPE.OPEN);
 };
 
+const conversationLabels = computed(() => {
+  return (
+    store.getters['conversationLabels/getConversationLabels'](
+      currentChat.value.id
+    ) || []
+  );
+});
+
 const onCmdResolveConversation = () => {
+  if (!conversationLabels.value.length) {
+    useAlert(t('CONVERSATION.LABEL_REQUIRED_TO_RESOLVE'));
+    return;
+  }
   showResolutionNoteModal.value = true;
 };
 
