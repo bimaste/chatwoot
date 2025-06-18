@@ -56,7 +56,9 @@ const onSave = () => {
 
 <template>
   <woot-modal v-model:show="show" :on-close="closeModal">
-    <woot-modal-header :header-title="t('CONVERSATION.RESOLUTION_NOTE.TITLE')" />
+    <woot-modal-header
+      :header-title="t('CONVERSATION.RESOLUTION_NOTE.TITLE')"
+    />
     <div class="p-8 flex flex-col gap-4">
       <Editor
         v-model="note"
@@ -99,34 +101,11 @@ const onSave = () => {
           @click="closeModal"
         />
         <Button
+          v-if="activeLabels.length"
           :label="t('CONVERSATION.RESOLUTION_NOTE.SAVE')"
           @click="onSave"
         />
-        <div
-          v-if="showLabelDropdown"
-          class="absolute left-0 top-full mt-1 w-full z-10"
-        >
-          <LabelDropdown
-            :account-labels="accountLabels"
-            :selected-labels="savedLabels"
-            @add="addLabelToConversation"
-            @remove="removeLabelFromConversation"
-          />
-        </div>
       </div>
-  <div class="flex justify-end gap-2">
-    <Button
-      faded
-      slate
-      :label="t('CONVERSATION.RESOLUTION_NOTE.CANCEL')"
-      @click="closeModal"
-    />
-    <Button
-      v-if="activeLabels.length"
-      :label="t('CONVERSATION.RESOLUTION_NOTE.SAVE')"
-      @click="onSave"
-    />
-  </div>
     </div>
   </woot-modal>
 </template>
