@@ -3,6 +3,9 @@ import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import Editor from 'dashboard/components-next/Editor/Editor.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
+import AddLabel from 'shared/components/ui/dropdown/AddLabel.vue';
+import LabelDropdown from 'shared/components/ui/label/LabelDropdown.vue';
+import { useConversationLabels } from 'dashboard/composables/useConversationLabels';
 
 const props = defineProps({
   onClose: { type: Function, default: () => {} },
@@ -14,11 +17,30 @@ const { t } = useI18n();
 
 const note = ref('');
 
+const {
+  savedLabels,
+  activeLabels,
+  accountLabels,
+  addLabelToConversation,
+  removeLabelFromConversation,
+} = useConversationLabels();
+
+const showLabelDropdown = ref(false);
+
+const toggleLabels = () => {
+  showLabelDropdown.value = !showLabelDropdown.value;
+};
+
+const closeDropdownLabel = () => {
+  showLabelDropdown.value = false;
+};
+
 const closeModal = () => {
   show.value = false;
   emit('close');
   props.onClose();
   note.value = '';
+  closeDropdownLabel();
 };
 
 const onSave = () => {
@@ -36,6 +58,34 @@ const onSave = () => {
         :placeholder="t('CONVERSATION.RESOLUTION_NOTE.PLACEHOLDER')"
         class="[&>div]:px-4"
       />
+      <div
+        v-on-clickaway="closeDropdownLabel"
+        class="flex flex-wrap items-start gap-1 relative"
+      >
+        <AddLabel @add="toggleLabels" />
+        <woot-label
+          v-for="label in activeLabels"
+          :key="label.id"
+          :title="label.title"
+          :description="label.description"
+          show-close
+          :color="label.color"
+          variant="smooth"
+          class="max-w-[calc(100%-0.5rem)]"
+          @remove="removeLabelFromConversation"
+        />
+        <div
+          v-if="showLabelDropdown"
+          class="absolute left-0 top-full mt-1 w-full z-10"
+        >
+          <LabelDropdown
+            :account-labels="accountLabels"
+            :selected-labels="savedLabels"
+            @add="addLabelToConversation"
+            @remove="removeLabelFromConversation"
+          />
+        </div>
+      </div>
       <div class="flex justify-end gap-2">
         <Button
           faded

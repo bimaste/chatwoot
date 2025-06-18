@@ -95,12 +95,17 @@ const toggleStatus = (status, snoozedUntil) => {
 };
 
 const onSaveResolutionNote = async note => {
+  if (!conversationLabels.value.length) {
+    useAlert(t('CONVERSATION.LABEL_REQUIRED_TO_RESOLVE'));
+    return;
+  }
   noteText = note;
-  if (!noteText) return;
-  await store.dispatch('contactNotes/create', {
-    contactId: currentChat.value.meta.sender.id,
-    content: noteText,
-  });
+  if (noteText) {
+    await store.dispatch('contactNotes/create', {
+      contactId: currentChat.value.meta.sender.id,
+      content: noteText,
+    });
+  }
   toggleStatus(wootConstants.STATUS_TYPE.RESOLVED);
 };
 
