@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useAlert } from 'dashboard/composables';
 import Editor from 'dashboard/components-next/Editor/Editor.vue';
 import Button from 'dashboard/components-next/button/Button.vue';
 import AddLabel from 'shared/components/ui/dropdown/AddLabel.vue';
@@ -44,6 +45,10 @@ const closeModal = () => {
 };
 
 const onSave = () => {
+  if (!activeLabels.value.length) {
+    useAlert(t('CONVERSATION.LABEL_REQUIRED_TO_RESOLVE'));
+    return;
+  }
   emit('save', note.value);
   closeModal();
 };
@@ -86,18 +91,19 @@ const onSave = () => {
           />
         </div>
       </div>
-      <div class="flex justify-end gap-2">
-        <Button
-          faded
-          slate
-          :label="t('CONVERSATION.RESOLUTION_NOTE.CANCEL')"
-          @click="closeModal"
-        />
-        <Button
-          :label="t('CONVERSATION.RESOLUTION_NOTE.SAVE')"
-          @click="onSave"
-        />
-      </div>
+  <div class="flex justify-end gap-2">
+    <Button
+      faded
+      slate
+      :label="t('CONVERSATION.RESOLUTION_NOTE.CANCEL')"
+      @click="closeModal"
+    />
+    <Button
+      v-if="activeLabels.length"
+      :label="t('CONVERSATION.RESOLUTION_NOTE.SAVE')"
+      @click="onSave"
+    />
+  </div>
     </div>
   </woot-modal>
 </template>
