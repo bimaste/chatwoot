@@ -3,7 +3,6 @@
     "NOT_AVAILABLE": "Not Available",
     "EMAIL_ADDRESS": "Email Address",
     "PHONE_NUMBER": "Phone number",
-    "BIRTHDAY": "Birthday",
     "IDENTIFIER": "Identifier",
     "COPY_SUCCESSFUL": "Copied to clipboard successfully",
     "COMPANY": "Company",
@@ -120,10 +119,6 @@
       "CITY": {
         "PLACEHOLDER": "Enter the city name",
         "LABEL": "City Name"
-      },
-      "BIRTHDAY": {
-        "PLACEHOLDER": "Select birth date",
-        "LABEL": "Birthday"
       },
       "SOCIAL_PROFILES": {
         "FACEBOOK": {

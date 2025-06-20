@@ -237,13 +237,6 @@ export default {
             show-copy
           />
           <ContactInfoRow
-            v-if="additionalAttributes.birthday"
-            :value="additionalAttributes.birthday"
-            icon="calendar-outline"
-            emoji="🎂"
-            :title="$t('CONTACT_PANEL.BIRTHDAY')"
-          />
-          <ContactInfoRow
             v-if="contact.identifier"
             :value="contact.identifier"
             icon="contact-identify"

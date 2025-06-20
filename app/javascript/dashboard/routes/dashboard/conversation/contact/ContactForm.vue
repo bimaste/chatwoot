@@ -40,7 +40,6 @@ export default {
       description: '',
       email: '',
       name: '',
-      birthday: '',
       phoneNumber: '',
       activeDialCode: '',
       avatarFile: null,
@@ -160,7 +159,6 @@ export default {
           this.$t('CONTACT_FORM.FORM.COUNTRY.SELECT_COUNTRY'),
       };
       this.city = additionalAttributes.city || '';
-      this.birthday = additionalAttributes.birthday || '';
       this.description = additionalAttributes.description || '';
       this.avatarUrl = this.contact.thumbnail || '';
       const {
@@ -198,7 +196,6 @@ export default {
               ? ''
               : this.country.name,
           city: this.city,
-          birthday: this.birthday,
           social_profiles: this.socialProfileUserNames,
         },
       };
@@ -387,13 +384,6 @@ export default {
       class="w-full"
       :label="$t('CONTACT_FORM.FORM.CITY.LABEL')"
       :placeholder="$t('CONTACT_FORM.FORM.CITY.PLACEHOLDER')"
-    />
-    <woot-input
-      v-model="birthday"
-      type="date"
-      class="w-full"
-      :label="$t('CONTACT_FORM.FORM.BIRTHDAY.LABEL')"
-      :placeholder="$t('CONTACT_FORM.FORM.BIRTHDAY.PLACEHOLDER')"
     />
 
     <div class="w-full">
