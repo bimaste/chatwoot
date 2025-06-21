@@ -225,7 +225,7 @@
     "KEYBOARD_SHORTCUTS": "Atalhos do teclado",
     "APPEARANCE": "Alterar Tema",
     "SUPER_ADMIN_CONSOLE": "Console de Super Admin",
-    "DOCS": "CRM",
+    "DOCS": "Ler documentação",
     "LOGOUT": "Encerrar sessão"
   },
   "APP_GLOBAL": {
@@ -348,7 +348,7 @@
       "INFO_TEXT": "Deixe o sistema marcar você automaticamente quando você não estiver usando o app ou o painel de controle.",
       "INFO_SHORT": "Marcar off-line automaticamente quando não estiver usando o aplicativo."
     },
-    "DOCS": "Ler documentos"
+    "DOCS": "CRM"
   },
   "BILLING_SETTINGS": {
     "TITLE": "Cobrança",
